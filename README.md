@@ -5,6 +5,12 @@ OK，如果你不想和我好好说话，那就不要怪消费者化身成为'�
 
 如果你有新的想法和建议，欢迎加入
 
+One day I wanted to summarize and organize all my conversations with AI, but I found that many AI export tools were either hard to use or couldn't achieve the results I wanted.  
+Here, I want to call out the tool AI Export Duck. A monthly fee of 28 RMB for a plugin is one thing—after all, paying for technical knowledge is fine—but their customer service was lecturing and questioning me, even defining whether my conversations had value or meaning.  
+OK, if you don’t want to talk to me properly, then don’t blame the consumer for turning into 'God.' So, for just 4 RMB, my big buddy made this plugin for me.  
+Alright, enough talk. Here’s the plugin I made, completely free.  
+
+If you have new ideas and suggestions, you’re welcome to join.
 
 # 对话匣 · AI 对话导出助手
 
