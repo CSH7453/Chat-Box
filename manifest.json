@@ -1,0 +1,90 @@
+{
+  "manifest_version": 3,
+  "name": "AI 对话导出助手 — 多站点 · TXT/Markdown/JSON",
+  "short_name": "AI 对话导出",
+  "version": "1.1.3",
+  "description": "读取 DeepSeek、Kimi、ChatGPT、Claude、Gemini、千问、豆包等网页版历史，导出为 TXT、Markdown 或 JSON，支持单个/多个 ZIP。",
+  "minimum_chrome_version": "109",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://chat.deepseek.com/*",
+    "https://www.kimi.com/*",
+    "https://kimi.moonshot.cn/*",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://kimi.com/*",
+    "https://claude.ai/*",
+    "https://grok.com/*",
+    "https://grok.x.ai/*",
+    "https://chat.x.ai/*",
+    "https://gemini.google.com/*",
+    "https://www.qianwen.com/*",
+    "https://qianwen.com/*",
+    "https://chat.qwen.ai/*",
+    "https://chat2.qianwen.com/*",
+    "https://www.doubao.com/*",
+    "https://doubao.com/*",
+    "https://yiyan.baidu.com/*",
+    "https://chat.baidu.com/*",
+    "https://hunyuan.tencent.com/*",
+    "https://yuanbao.tencent.com/*",
+    "https://chat2-api.qianwen.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "打开 AI 对话导出助手",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.deepseek.com/*",
+        "https://www.kimi.com/*",
+        "https://kimi.moonshot.cn/*",
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://kimi.com/*",
+        "https://claude.ai/*",
+        "https://grok.com/*",
+        "https://grok.x.ai/*",
+        "https://chat.x.ai/*",
+        "https://gemini.google.com/*",
+        "https://www.qianwen.com/*",
+        "https://qianwen.com/*",
+        "https://chat.qwen.ai/*",
+        "https://www.doubao.com/*",
+        "https://doubao.com/*",
+        "https://yiyan.baidu.com/*",
+        "https://chat.baidu.com/*",
+        "https://hunyuan.tencent.com/*",
+        "https://yuanbao.tencent.com/*"
+      ],
+      "js": [
+        "lib/core.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

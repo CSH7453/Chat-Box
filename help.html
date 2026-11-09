@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>使用说明 · AI 对话导出助手</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="help.css">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="dashboard.html" aria-label="回到导出工作台">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M6.5 8.5h12.2a4.3 4.3 0 0 1 0 8.6H13l-4.2 3.4v-3.9a4.3 4.3 0 0 1-2.3-3.8v-4.3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M17 20.2h7.2a3 3 0 0 0 3-3v-2.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M23.7 17.8v8.1m0 0-2.6-2.7m2.6 2.7 2.6-2.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="brand-copy"><strong>对话匣</strong><small>AI 对话导出助手</small></span>
+    </a>
+    <div class="topbar-actions">
+      <a class="top-link" href="dashboard.html">回到工作台</a>
+    </div>
+  </header>
+
+  <main class="help-shell">
+    <div class="welcome-banner" id="welcomeBanner" hidden>
+      <span class="welcome-mark">✓</span>
+      <div><b>安装成功。</b>接下来打开一个 AI 网页，登录后回到工作台即可。</div>
+      <a class="button primary" href="dashboard.html">打开工作台</a>
+    </div>
+
+    <section class="help-hero">
+      <p class="eyebrow">A SMALL MANUAL</p>
+      <h1>让对话离开屏幕，<br>落到你自己的文件夹里。</h1>
+      <p class="help-lede">这是一款在 Chrome / Edge 中运行的本地导出工具。它读取你已登录的 Kimi、DeepSeek、ChatGPT、Claude、Gemini、千问、豆包等网页版历史，按你的选择生成 TXT、Markdown 或 JSON。没有账号密码采集，没有中转服务器。</p>
+      <div class="help-hero-actions">
+        <a class="button primary" href="dashboard.html">开始导出</a>
+        <a class="button ghost" href="#faq">先看常见问题</a>
+      </div>
+    </section>
+
+    <section class="help-grid">
+      <article class="help-card">
+        <div class="help-step">01</div>
+        <h2>安装扩展</h2>
+        <ol>
+          <li>把 <code>AI对话导出助手</code> 文件夹放在一个不会被删除的位置，例如 <code>D:\AI对话导出\</code>。</li>
+          <li>在 Chrome 地址栏打开 <code>chrome://extensions</code>；Edge 打开 <code>edge://extensions</code>。</li>
+          <li>打开右上角（Edge 在左侧）的「开发者模式」。</li>
+          <li>点击「加载已解压的扩展程序」，选择 <code>AI对话导出助手</code> 文件夹。</li>
+          <li>把「AI 对话导出助手」固定到浏览器工具栏，点击图标即可打开工作台。</li>
+        </ol>
+        <p class="help-note">如果你拿到的是 ZIP 包，请先解压再加载；不要直接选择 ZIP。更新扩展后，已打开的旧网页通常需要刷新一次。</p>
+      </article>
+
+      <article class="help-card">
+        <div class="help-step">02</div>
+        <h2>登录并读取</h2>
+        <ol>
+          <li>在 Chrome / Edge 里打开任意受支持的 AI 网站（如 <code>chat.deepseek.com</code>、<code>www.kimi.com</code>、<code>chatgpt.com</code>），完成登录。</li>
+          <li>保持这些网页标签页开着，点击扩展图标打开「对话匣」。</li>
+          <li>在「选择对话来源」里选择对应的标签页。扩展会读取账号里的全部历史会话，不只是屏幕上看得到的几条。</li>
+          <li>历史很多时，读取需要几秒到几十秒，请保持原网页打开。</li>
+        </ol>
+        <p class="help-note">如果提示未登录或读取失败，先刷新原网页，确认网页里能看到历史记录，再回工作台点「重试」。</p>
+      </article>
+
+      <article class="help-card">
+        <div class="help-step">03</div>
+        <h2>挑选要留下的对话</h2>
+        <p>历史列表支持搜索、筛选和逐条勾选：</p>
+        <ul class="plain-list">
+          <li><b>整行点击</b>即可勾选；右侧下载小图标可只导出这一条。</li>
+          <li><b>全选</b>会选中当前筛选结果；搜索后全选，只影响搜索命中的对话。</li>
+          <li><b>当前 / 置顶</b>标签帮助你快速定位正在聊的或固定的重要记录。</li>
+        </ul>
+        <p class="help-note">默认导出当前可见的对话分支。若对话里编辑过问题或重新生成过答案，被替换的旧分支不会混入正文，导出文件头部会注明省略了多少条旧分支。</p>
+      </article>
+
+      <article class="help-card">
+        <div class="help-step">04</div>
+        <h2>选择格式并导出</h2>
+        <div class="format-table">
+          <div><b>文件格式</b><span>TXT 通用易读；Markdown 保留标题、列表和代码块；JSON 保留结构化字段，适合二次处理。</span></div>
+          <div><b>单个文件</b><span>全部选中对话合并成 1 个文件，带目录和分隔线。</span></div>
+          <div><b>多个文件</b><span>一条对话一个文件，放在同一个下载文件夹。</span></div>
+          <div><b>单个 ZIP</b><span>每条对话一个文件，全部打包进 1 个 ZIP。</span></div>
+          <div><b>多个 ZIP</b><span>一条对话一个 ZIP，适合分卷归档。</span></div>
+        </div>
+        <p>格式与打包方式互相独立，共 12 种组合。导出文件默认保存到浏览器的下载目录 <code>AI对话导出/网站名/</code> 下。回答正文始终导出；模型推理过程默认关闭，需要时请在导出设置中主动勾选。可勾选「文件名带日期」；UTF-8 BOM 只作用于 TXT / Markdown，JSON 始终无 BOM。</p>
+      </article>
+    </section>
+
+    <section class="support-section">
+      <div class="section-eyebrow">SUPPORT</div>
+      <h2>支持范围</h2>
+      <div class="support-grid">
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#4d6bfe">D</span>
+          <div><b>DeepSeek</b><p>全量历史、当前分支、思考过程；登录状态来自网页本身。</p></div>
+          <span class="status-badge ok">全量</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#1c1c1c">K</span>
+          <div><b>Kimi</b><p>全量历史、消息正文与思考过程；当前对话自动标记。</p></div>
+          <span class="status-badge ok">全量</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#0d8a72">G</span>
+          <div><b>ChatGPT</b><p>会话列表与当前分支正文；官方接口调整时可能暂时失效。</p></div>
+          <span class="status-badge test">实验</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#c15f3c">C</span>
+          <div><b>Claude</b><p>组织下的会话列表与正文；扩展会读取你已登录的 claude.ai 会话。</p></div>
+          <span class="status-badge test">实验</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#4285f4">✦</span>
+          <div><b>Gemini</b><p>通过 Gemini 内部 batchexecute 接口读取历史；Google 接口不稳定，需刷新页面。</p></div>
+          <span class="status-badge test">实验</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#615ced">Q</span>
+          <div><b>千问 / Qwen</b><p>会话列表与历史消息；支持 qianwen.com 与 chat.qwen.ai。</p></div>
+          <span class="status-badge test">实验</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#1664ff">豆</span>
+          <div><b>豆包</b><p>普通对话与智能体会话，分页读取全部可见消息。</p></div>
+          <span class="status-badge test">实验</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#1d1d1f">G</span>
+          <div><b>Grok</b><p>当前页模式：导出当前打开的对话中已加载的消息。</p></div>
+          <span class="status-badge current">当前页</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#2932e1">文</span>
+          <div><b>文心一言</b><p>当前页模式：导出当前页面已加载的消息。</p></div>
+          <span class="status-badge current">当前页</span>
+        </div>
+        <div class="support-item">
+          <span class="site-mark" style="--mark-color:#0052d9">混</span>
+          <div><b>混元 / 元宝</b><p>当前页模式：导出当前页面已加载的消息。</p></div>
+          <span class="status-badge current">当前页</span>
+        </div>
+      </div>
+      <p class="support-foot"><b>全量</b>：读取账号历史接口，理论上可导出全部会话；<b>实验</b>：接口已接入但可能随网站改版失效；<b>当前页</b>：只导出当前打开对话中已加载的消息。原生 Windows App 的本地数据库不在此扩展的读取范围内。若某个 App 的对话没有同步到网页版，请先在 App 内使用其自带的导出功能。这个工具不绕过任何登录或权限限制。</p>
+    </section>
+
+    <section class="privacy-section">
+      <div class="privacy-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.2 5 6v5.2c0 4.2 2.8 7.4 7 9.6 4.2-2.2 7-5.4 7-9.6V6l-7-2.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="section-eyebrow">PRIVACY</div>
+        <h2>它如何对待你的数据</h2>
+        <p>扩展使用你浏览器里已有的登录态，在你当前打开的网站页面内调用该网站自己的接口；对话内容只在页面、扩展工作台和你的下载目录之间流动。</p>
+        <ul class="privacy-list">
+          <li>不收集账号、密码或登录令牌，不把令牌发送到工作台或第三方。</li>
+          <li>没有远端服务器，没有统计 SDK，没有广告代码。</li>
+          <li>导出文件完全由浏览器在本地生成，使用标准 TXT / Markdown / JSON / ZIP 格式，随时可读。</li>
+          <li>扩展本身不修改、不删除网站上的任何对话，只做读取。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+      <div class="section-eyebrow">FAQ</div>
+      <h2>常见问题</h2>
+      <div class="faq-list">
+        <details open>
+          <summary>点击图标没有反应，或看不到工作台？</summary>
+          <p>先确认扩展已在 <code>chrome://extensions</code>（Edge 为 <code>edge://extensions</code>）中启用，并已固定到工具栏。也可以点击浏览器工具栏上的扩展图标。如果刚更新过扩展，刷新一次工作台页面。</p>
+        </details>
+        <details>
+          <summary>提示「需要重新登录」或「登录状态已失效」？</summary>
+          <p>打开对应网站，刷新页面并确认已经登录、能看到历史记录，然后回到工作台点「重试」。DeepSeek 的登录令牌保存在网页的本地存储里，刷新页面会更新它；扩展不会替你把密码发到任何地方。</p>
+        </details>
+        <details>
+          <summary>历史列表只显示了一部分？</summary>
+          <p>扩展会按网站的游标分页读取，通常能读取完整历史。若账号会话特别多、网络中途断开或网站限流，可能只取到一部分。先等待片刻再点「重试」；建议分批导出，避免一次选中上千条。</p>
+        </details>
+        <details>
+          <summary>当前正在聊的对话没有出现在列表里？</summary>
+          <p>如果对话已经发送过消息，通常会在历史列表里并带有「当前」标签。如果刚打开新对话还没发送消息，网站尚未创建记录，暂时无法导出；发送一条消息后再读取即可。</p>
+        </details>
+        <details>
+          <summary>为什么导出的内容和网页上看到的不完全一样？</summary>
+          <p>网页只展示当前分支，而网站服务端还保存着被编辑、重新生成替换掉的旧分支。默认只导出网页上显示的当前分支，并在文件头注明隐藏了多少旧分支。回答正文始终导出，模型推理过程默认关闭。</p>
+        </details>
+        <details>
+          <summary>选择「多个文件 / 多个 ZIP」后浏览器提示下载多个文件？</summary>
+          <p>这是浏览器的正常保护。允许该扩展下载多个文件即可。选择很多条对话时，建议使用「单个 ZIP」，一次下载更稳妥。</p>
+        </details>
+        <details>
+          <summary>导出的 TXT 在旧版记事本里乱码？</summary>
+          <p>保持「UTF-8 BOM」勾选；它会让 Windows 记事本正确识别中文。大多数现代编辑器（VS Code、Notepad++ 等）也能直接打开 UTF-8 文件。</p>
+        </details>
+        <details>
+          <summary>会不会把我的对话上传到别的地方？</summary>
+          <p>不会。扩展没有后端服务。它只在当前 AI 网站页面内调用该网站自己的接口，拿到数据后在本机内存里生成 TXT/ZIP，再交给浏览器下载。网络请求只发往你已登录的 AI 网站域名。</p>
+        </details>
+        <details>
+          <summary>支持 Firefox 吗？</summary>
+          <p>当前版本为 Chromium Manifest V3 扩展，面向 Chrome 和 Edge。Firefox 需要单独适配，暂未提供。</p>
+        </details>
+        <details>
+          <summary>为什么 Grok、文心一言、混元只有「当前页」？</summary>
+          <p>这几个站点目前没有稳定、可复用的完整历史接口，扩展改用页面快照：只导出当前打开的对话中已经加载出来的消息。请先滚动到最早一条再导出。它们的完整历史适配会在接口稳定后补上。</p>
+        </details>
+        <details>
+          <summary>JSON 和 Markdown 有什么区别？</summary>
+          <p>Markdown 适合阅读和继续编辑，会保留标题、列表、代码块等排版；JSON 是结构化数据，包含会话 ID、时间、角色、正文、思考过程等字段，适合导入其他工具或做二次处理。JSON 始终使用无 BOM 的 UTF-8，避免解析失败。</p>
+        </details>
+        <details>
+          <summary>网站改版后读不出来怎么办？</summary>
+          <p>AI 网站的内部接口会变化。如果错误持续出现，请更新扩展版本；你的原始对话仍在网站账号里，不会因为导出失败而丢失。也可以先在网页里手动复制重要对话作为临时备份。</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="help-cta">
+      <div>
+        <div class="section-eyebrow">READY WHEN YOU ARE</div>
+        <h2>去把对话收好。</h2>
+        <p>打开工作台，选择一个已登录的 AI 标签页。</p>
+      </div>
+      <a class="button primary" href="dashboard.html">打开导出工作台</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>对话匣 · AI 对话导出助手 <span class="version" id="versionLabel"></span></span>
+    <span class="footer-dot"></span>
+    <span>本机处理</span>
+    <span class="footer-dot"></span>
+    <a href="dashboard.html">工作台</a>
+  </footer>
+
+  <script src="lib/core.js"></script>
+  <script src="help.js" defer></script>
+</body>
+</html>

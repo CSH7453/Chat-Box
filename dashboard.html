@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 对话导出助手</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="dashboard.html" aria-label="AI 对话导出助手首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M6.5 8.5h12.2a4.3 4.3 0 0 1 0 8.6H13l-4.2 3.4v-3.9a4.3 4.3 0 0 1-2.3-3.8v-4.3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M17 20.2h7.2a3 3 0 0 0 3-3v-2.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M23.7 17.8v8.1m0 0-2.6-2.7m2.6 2.7 2.6-2.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="brand-copy">
+        <strong>对话匣</strong>
+        <small>AI 对话导出助手</small>
+      </span>
+    </a>
+    <div class="topbar-actions">
+      <span class="local-pill"><i></i>本机处理 · 不上传</span>
+      <a class="top-link" href="help.html" target="_blank" rel="noreferrer">使用说明</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">YOUR CONVERSATIONS, YOURS</p>
+        <h1 id="hero-title">把和 AI 的每次对话，<br><em>留在自己手里。</em></h1>
+        <p class="lede">读取 Kimi、DeepSeek、ChatGPT、Claude、Gemini、千问、豆包等网页版的历史，挑出你需要的对话，导出为 TXT、Markdown 或 JSON。登录状态和对话内容都只在这台电脑上处理。</p>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-row"><span class="meta-icon">↳</span><div><b>多站支持</b><small>接口级读取完整历史，当前页站点也能快照</small></div></div>
+        <div class="hero-meta-row"><span class="meta-icon">↳</span><div><b>自由选择</b><small>全选、搜索、单条或多条导出</small></div></div>
+        <div class="hero-meta-row"><span class="meta-icon">↳</span><div><b>三种格式</b><small>TXT / Markdown / JSON × 四种打包方式</small></div></div>
+      </div>
+    </section>
+
+    <section class="panel source-panel" aria-labelledby="source-title">
+      <div class="panel-head">
+        <div class="step-badge">01</div>
+        <div class="panel-heading">
+          <h2 id="source-title">选择对话来源</h2>
+          <p>请先在 Chrome 或 Edge 里打开并登录任一受支持的 AI 网页版。</p>
+        </div>
+        <button class="icon-button" id="refreshTabs" type="button" title="重新检测已打开的 AI 网页" aria-label="重新检测已打开的 AI 网页">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div id="sourceArea" class="source-area" aria-live="polite"></div>
+    </section>
+
+    <div class="workspace" id="workspace">
+      <section class="panel conversations-panel" aria-labelledby="conversations-title">
+        <div class="panel-head">
+          <div class="step-badge">02</div>
+          <div class="panel-heading">
+            <h2 id="conversations-title">挑选对话</h2>
+            <p>当前选中的内容可以导出；点击整行即可勾选。</p>
+          </div>
+          <div class="list-heading-meta" id="listMeta"></div>
+        </div>
+
+        <div class="empty-state" id="listIdle">
+          <div class="empty-illustration" aria-hidden="true">
+            <span class="bubble bubble-a">Hi</span>
+            <span class="bubble bubble-b">↧</span>
+          </div>
+          <h3>还在等你的历史记录</h3>
+          <p>先从上方选择一个已打开的 AI 网页，我们会读取它保存的全部对话。</p>
+        </div>
+
+        <div class="loading-state" id="listLoading" hidden aria-live="polite">
+          <div class="loading-copy">
+            <span class="spinner" aria-hidden="true"></span>
+            <div><b>正在读取历史对话</b><p id="loadingHint">正在连接页面，请稍候…</p></div>
+          </div>
+          <div class="skeleton-list" aria-hidden="true">
+            <div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div>
+            <div class="skeleton-row"></div><div class="skeleton-row short"></div>
+          </div>
+        </div>
+
+        <div class="error-state" id="listError" hidden role="alert">
+          <div class="error-mark" aria-hidden="true">!</div>
+          <div class="error-copy">
+            <h3 id="listErrorTitle">没能读取历史对话</h3>
+            <p id="listErrorMessage"></p>
+            <p class="error-hint" id="listErrorHint"></p>
+            <div class="error-actions">
+              <button class="button secondary" id="retryList" type="button">重试</button>
+              <button class="button ghost" id="openSiteFromError" type="button">打开网站</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="listContent" hidden>
+          <div class="toolbar">
+            <label class="search-box">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" stroke="currentColor" stroke-width="1.8"/><path d="m15.5 15.5 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input id="searchInput" type="search" placeholder="搜索标题或内容摘要…" autocomplete="off" aria-label="搜索对话">
+              <kbd>/</kbd>
+            </label>
+            <div class="filter-chips" role="group" aria-label="筛选对话">
+              <button class="chip active" type="button" data-filter="all">全部</button>
+              <button class="chip" type="button" data-filter="pinned">置顶</button>
+              <button class="chip" type="button" data-filter="current">当前</button>
+              <button class="chip" type="button" data-filter="selected">已选</button>
+            </div>
+          </div>
+          <div class="list-subbar">
+            <label class="check-label">
+              <input type="checkbox" id="selectAll">
+              <span class="custom-check" aria-hidden="true"></span>
+              <span id="selectAllText">全选</span>
+            </label>
+            <span class="selection-count" id="selectionInfo">已选 0 条</span>
+            <span class="subbar-spacer"></span>
+            <span class="list-count" id="loadedInfo"></span>
+          </div>
+          <div id="warnings" class="warning-list" role="status"></div>
+          <div id="conversationList" class="conversation-list" role="list"></div>
+          <button class="load-more" id="loadMore" type="button" hidden>显示更多对话</button>
+        </div>
+      </section>
+
+      <aside class="panel export-panel" aria-labelledby="export-title">
+        <div class="panel-head compact">
+          <div class="step-badge">03</div>
+          <div class="panel-heading">
+            <h2 id="export-title">导出设置</h2>
+            <p>文件格式与打包方式互相独立。</p>
+          </div>
+        </div>
+
+        <div class="format-field">
+          <div class="control-label">文件格式</div>
+          <div class="format-tabs" id="formatGrid" role="radiogroup" aria-label="导出文件格式">
+            <label class="format-card" data-format="txt">
+              <input type="radio" name="exportFormat" value="txt">
+              <span class="format-code">TXT</span>
+              <span class="format-copy"><b>纯文本</b><small>通用易读</small></span>
+            </label>
+            <label class="format-card" data-format="md">
+              <input type="radio" name="exportFormat" value="md">
+              <span class="format-code">MD</span>
+              <span class="format-copy"><b>Markdown</b><small>保留排版</small></span>
+            </label>
+            <label class="format-card" data-format="json">
+              <input type="radio" name="exportFormat" value="json">
+              <span class="format-code">{ }</span>
+              <span class="format-copy"><b>JSON</b><small>结构化数据</small></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="package-field">
+          <div class="control-label">打包方式</div>
+          <div class="mode-grid" id="modeGrid" role="radiogroup" aria-label="打包方式">
+            <label class="mode-card" data-mode="single">
+              <input type="radio" name="exportMode" value="single">
+              <span class="mode-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6"/><path d="M14 3.8V8h3.8M9 12h6M9 15.5h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+              <span class="mode-copy"><b>单个文件</b><small>合并为一份</small></span>
+            </label>
+            <label class="mode-card" data-mode="multi">
+              <input type="radio" name="exportMode" value="multi">
+              <span class="mode-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 3.5h6.5L19 8v12.5H8a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6"/><path d="M14 3.8V8h4.5M10 12h5M10 15.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 6.5v14h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+              <span class="mode-copy"><b>多个文件</b><small>一条一份</small></span>
+            </label>
+            <label class="mode-card recommended" data-mode="zip_single">
+              <input type="radio" name="exportMode" value="zip_single">
+              <span class="mode-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4.5 7.8 12 12l7.5-4.2M12 21v-9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+              <span class="mode-copy"><b>单个 ZIP</b><small>一个压缩包</small></span>
+              <span class="mini-tag">推荐</span>
+            </label>
+            <label class="mode-card" data-mode="zip_multi">
+              <input type="radio" name="exportMode" value="zip_multi">
+              <span class="mode-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 8.5 7 6l3.5 2.5v5L7 16l-3.5-2.5v-5ZM13.5 13.5 17 11l3.5 2.5v5L17 21l-3.5-2.5v-5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m4 10.5 2.8 2 3-2M14 15.5l2.8 2 3-2" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+              <span class="mode-copy"><b>多个 ZIP</b><small>一条一包</small></span>
+            </label>
+          </div>
+        </div>
+        <div class="option-list">
+          <label class="switch-row">
+            <span><b>导出模型推理过程</b><small>默认关闭；仅在你主动勾选时写入</small></span>
+            <input type="checkbox" id="optThinking">
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+          <label class="switch-row">
+            <span><b>文件名带日期</b><small>方便按时间排序</small></span>
+            <input type="checkbox" id="optDate" checked>
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+          <label class="switch-row">
+            <span><b>UTF-8 BOM</b><small>TXT / Markdown；JSON 始终无 BOM</small></span>
+            <input type="checkbox" id="optBom" checked>
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <div class="export-summary" id="exportSummary">
+          <div class="summary-top"><span>等待选择</span><b>—</b></div>
+          <p>从左侧勾选至少一条对话。</p>
+        </div>
+
+        <button class="button primary export-button" id="exportBtn" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 16.5v2A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="exportBtnText">选择对话后导出</span>
+        </button>
+
+        <div class="export-progress" id="exportProgress" hidden aria-live="polite">
+          <div class="progress-head"><span id="progressLabel">准备中…</span><b id="progressPct">0%</b></div>
+          <div class="progress-track"><i id="progressBar"></i></div>
+          <div class="progress-foot"><span id="progressDetail"></span><button type="button" id="cancelExport">取消</button></div>
+        </div>
+
+        <div class="export-result" id="exportResult" hidden></div>
+
+        <p class="privacy-note">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 5 6v5.2c0 4.2 2.8 7.4 7 9.6 4.2-2.2 7-5.4 7-9.6V6l-7-2.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          对话只在本机读取和打包，不会经过我们的服务器。网站登录令牌不会离开原网页。
+        </p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>对话匣 · AI 对话导出助手 <span class="version" id="versionLabel"></span></span>
+    <span class="footer-dot"></span>
+    <a href="help.html" target="_blank" rel="noreferrer">常见问题</a>
+    <span class="footer-dot"></span>
+    <span>支持 Chrome / Edge</span>
+  </footer>
+
+  <div class="toast-host" id="toastHost" aria-live="polite" aria-atomic="true"></div>
+
+  <dialog class="confirm-dialog" id="confirmDialog">
+    <form method="dialog">
+      <div class="dialog-mark">!</div>
+      <h3 id="confirmTitle">确认导出</h3>
+      <p id="confirmMessage"></p>
+      <div class="dialog-actions">
+        <button class="button ghost" value="cancel" type="submit">取消</button>
+        <button class="button primary" value="ok" type="submit">继续</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="lib/core.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
